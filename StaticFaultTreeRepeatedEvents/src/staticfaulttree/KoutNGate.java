@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- *  1417779fa2d0d5f04d5a4640a6fb7d6b60de15bd
+ *  
  * @author marco
  */
 public final class KoutNGate implements Node{
