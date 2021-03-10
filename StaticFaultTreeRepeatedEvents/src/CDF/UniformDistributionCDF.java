@@ -1,9 +1,9 @@
 
-package stfcdf;
+package CDF;
        
 public class UniformDistributionCDF implements CDFinterface{
-    double a; //start period ---- private?
-    double b; //end period
+    private double a; //start period
+    private double b; //end period
     
     public UniformDistributionCDF(double a, double b) {
         this.a = a;
