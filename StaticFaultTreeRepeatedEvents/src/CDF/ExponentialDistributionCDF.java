@@ -3,7 +3,7 @@ package CDF;
 
 import org.apache.commons.math3.distribution.ExponentialDistribution;
 
-public class ExponentialDistributionCDF implements CDFinterface{
+public class ExponentialDistributionCDF implements CDFInterface{
     private ExponentialDistribution exp;
     
     public ExponentialDistributionCDF(double lambda){

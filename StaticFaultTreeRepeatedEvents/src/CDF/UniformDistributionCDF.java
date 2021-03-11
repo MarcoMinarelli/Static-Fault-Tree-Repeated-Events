@@ -1,7 +1,7 @@
 
 package CDF;
        
-public class UniformDistributionCDF implements CDFinterface{
+public class UniformDistributionCDF implements CDFInterface{
     private double a; //start period
     private double b; //end period
     
