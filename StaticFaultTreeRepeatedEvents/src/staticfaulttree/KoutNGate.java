@@ -32,6 +32,7 @@ private List<Node> children = new ArrayList<>();
      * Methods tha returns the probability that this gate returns a failure at the given time t
      * @param t Time
      * @return  Probability of failure at time t. 
+     * @author Nicole
      */
     @Override
     public double getProbabilityFault(double t) {
