@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Class that represent a Gate. <br/> This class is used as a common class
+ *  that provides common functionality to all the classes.
  * @author Minarelli
  */
 public abstract class  Gate implements Node{

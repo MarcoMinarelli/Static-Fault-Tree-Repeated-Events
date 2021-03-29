@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Class that represent a Basic Event
  * @author nicol
  */
 public class BasicEvent implements Node{
@@ -15,6 +15,8 @@ public class BasicEvent implements Node{
     private String description;
     private double maintenanceTime = 0;
     private List<Node> parent = new ArrayList();
+    private int id;
+    private static int lastId = 0;
 
     /**
      * Costructor of BasicEvent class
@@ -26,6 +28,8 @@ public class BasicEvent implements Node{
         this.cdf = cdf;
         this.maintenanceCost = maintenanceCost;
         this.description = description;
+        id = lastId;
+        lastId++;
     }
     
     
@@ -34,11 +38,23 @@ public class BasicEvent implements Node{
         return cdf.getProbability(t-maintenanceTime);
     }
 
+    /**
+     *  Method that adds a Node this object, if this object is a Gate. <br/>
+     *  Being a BasicEvent, this method throws an Exception
+     * @param node 
+     * @throws UnsupportedOperationException 
+     */
     @Override
     public void addChild(Node node) {
         throw new UnsupportedOperationException("Child operation on leaf object."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     *  Method that removes a Node this object, if this object is a Gate. <br/>
+     *  Being a BasicEvent, this method throws an Exception
+     * @param node 
+     * @throws UnsupportedOperationException 
+     */
     @Override
     public void removeChild(Node node) {
         throw new UnsupportedOperationException("Child operation on leaf object."); //To change body of generated methods, choose Tools | Templates.
@@ -79,6 +95,10 @@ public class BasicEvent implements Node{
 
     public List<Node> getParent() {
         return parent;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setMaintenanceTime(double maintenanceTime) {
