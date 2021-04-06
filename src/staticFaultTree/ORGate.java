@@ -17,15 +17,18 @@ public final class ORGate extends Gate{
      * Constructor 
      * @param c List of nodes that are OR inputs.
      */
-    public ORGate(List<Node> c){
+    public ORGate(List<Node> c, int gateType){
         Node n;
         for(Iterator<Node> i = c.iterator(); i.hasNext(); ){
             n= i.next();
             addChild(n);
             n.addParent(this);
         }
+        this.gateType = Gate.OR;
     }
-
+    
+    
+    
     /**
      * Methods tha returns the probability that this gate returns a failure at the given time t
      * @param t Time

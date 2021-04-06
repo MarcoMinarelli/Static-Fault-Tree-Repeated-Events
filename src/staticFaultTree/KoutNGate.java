@@ -14,10 +14,11 @@ public final class KoutNGate extends Gate{
     private List<Node> children = new ArrayList<>();
     public int k;
     
-    public KoutNGate(int k){
+    public KoutNGate(int k, int gateType){
         k = this.k;
+        this.gateType = Gate.KoutN;
     }
-    
+
     /**
      * Constructor 
      * @param c List of nodes that are OR inputs.

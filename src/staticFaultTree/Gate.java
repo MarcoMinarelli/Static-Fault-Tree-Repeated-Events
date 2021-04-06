@@ -14,6 +14,13 @@ public abstract class  Gate implements Node{
     protected List<Node> children = new ArrayList<>();
     protected List<Node> parents = new ArrayList<>();
     
+    public static int AND = 1;
+    public static int OR = 0;
+    public static int KoutN = 2; 
+    
+    protected int gateType;   
+    
+    
  /**
      * Method that adds an input ("child") to this Gate.
      * @param node The node to be added at the Gate
@@ -73,6 +80,10 @@ public abstract class  Gate implements Node{
     @Override
     public boolean isBasicEvent() {
         return false;
+    }
+    
+    public int getType(){
+        return gateType;
     }
     
 }

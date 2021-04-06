@@ -16,14 +16,17 @@ public final class ANDGate extends Gate{
      * Constructor 
      * @param c List of nodes that are OR inputs.
      */
-    public ANDGate(List<Node> c){
+    public ANDGate(List<Node> c, int gateType){
         Node n;
         for(Iterator<Node> i = c.iterator(); i.hasNext(); ){
             n= i.next();
             addChild(n);
             n.addParent(this);
         }
+        this.gateType = Gate.AND;
     }
+    
+    
 
     /**
      * Methods tha returns the probability that this gate returns a failure at the given time t
