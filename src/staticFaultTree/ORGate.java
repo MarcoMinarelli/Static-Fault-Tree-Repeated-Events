@@ -10,14 +10,11 @@ import java.util.List;
  */
 public final class ORGate extends Gate{
     
-    private List<Node> children = new ArrayList<>();
-    private List<Node> parents = new ArrayList<>();
-
     /**
      * Constructor 
      * @param c List of nodes that are OR inputs.
      */
-    public ORGate(List<Node> c, int gateType){
+    public ORGate(List<Node> c){
         Node n;
         for(Iterator<Node> i = c.iterator(); i.hasNext(); ){
             n= i.next();
@@ -27,7 +24,9 @@ public final class ORGate extends Gate{
         this.gateType = Gate.OR;
     }
     
-    
+    public ORGate(){
+        this.gateType = Gate.OR;
+    }
     
     /**
      * Methods tha returns the probability that this gate returns a failure at the given time t
