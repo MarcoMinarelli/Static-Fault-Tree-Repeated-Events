@@ -11,7 +11,6 @@ import java.util.List;
  * @author Minarelli
  */
 public final class KoutNGate extends Gate{
-    private List<Node> children = new ArrayList<>();
     public int k;
     
     public KoutNGate(int k){
