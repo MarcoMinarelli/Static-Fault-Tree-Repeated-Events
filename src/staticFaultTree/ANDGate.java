@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Iterator;
 
 /**
- * Class that represent a logical AND Gate, qith N inputs. 
+ * Class that represent a logical AND Gate, with N inputs. 
  * @author Minarelli
  */
 public final class ANDGate extends Gate{
@@ -14,7 +14,7 @@ public final class ANDGate extends Gate{
     
     /**
      * Constructor 
-     * @param c List of nodes that are OR inputs.
+     * @param c List of nodes that are AND inputs.
      */
     public ANDGate(List<Node> c){
         Node n;
@@ -23,6 +23,10 @@ public final class ANDGate extends Gate{
             addChild(n);
             n.addParent(this);
         }
+        this.gateType = Gate.AND;
+    }
+    
+    public ANDGate(){
         this.gateType = Gate.AND;
     }
     
