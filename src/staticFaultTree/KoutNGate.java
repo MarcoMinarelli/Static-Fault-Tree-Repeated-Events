@@ -14,7 +14,7 @@ public final class KoutNGate extends Gate{
     private List<Node> children = new ArrayList<>();
     public int k;
     
-    public KoutNGate(int k, int gateType){
+    public KoutNGate(int k){
         k = this.k;
         this.gateType = Gate.KoutN;
     }
@@ -31,6 +31,7 @@ public final class KoutNGate extends Gate{
             addChild(n);
             n.addParent(this);
         }
+        this.gateType = Gate.KoutN;
     }
 
     /**
