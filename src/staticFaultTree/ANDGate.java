@@ -16,7 +16,7 @@ public final class ANDGate extends Gate{
      * Constructor 
      * @param c List of nodes that are OR inputs.
      */
-    public ANDGate(List<Node> c, int gateType){
+    public ANDGate(List<Node> c){
         Node n;
         for(Iterator<Node> i = c.iterator(); i.hasNext(); ){
             n= i.next();
