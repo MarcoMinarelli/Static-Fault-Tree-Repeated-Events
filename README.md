@@ -17,5 +17,5 @@ I casi di interesse sono invece 4:
 ## Dipendenze
 Per poter essere eseguito necessita di 2 librerie esterne: 
   * [OR-Tools](https://developers.google.com/optimization): utilizzato per la risoluzione di problemi di ricerca operativa 
-  * [Apache Commons Mat](https://commons.apache.org/proper/commons-math/): utilizzata per il calcolo efficiente delle funzioni di ripartizione 
+  * [Apache Commons Math](https://commons.apache.org/proper/commons-math/): utilizzata per il calcolo efficiente delle funzioni di ripartizione 
 
