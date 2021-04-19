@@ -14,9 +14,9 @@ public abstract class  Gate implements Node{
     protected List<Node> children = new ArrayList<>();
     protected List<Node> parents = new ArrayList<>();
     
-    public static int AND = 1;
-    public static int OR = 0;
-    public static int KoutN = 2; 
+    public static final int AND = 1;
+    public static final int OR = 0;
+    public static final int KoutN = 2; 
     
     protected int gateType;   
     
