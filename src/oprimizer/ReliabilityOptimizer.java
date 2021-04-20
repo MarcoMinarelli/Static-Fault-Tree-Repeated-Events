@@ -16,12 +16,12 @@ import staticfaulttree.BasicEvent;
  */
 public class ReliabilityOptimizer{
 
-    private static AffidabilityOptimizer opt = new AffidabilityOptimizer();
+    private static ReliabilityOptimizer opt = new ReliabilityOptimizer();
 
-    private AffidabilityOptimizer() {
+    private ReliabilityOptimizer() {
     }
 
-    private static AffidabilityOptimizer getInstance() {
+    private static ReliabilityOptimizer getInstance() {
         return opt;
     }
 
