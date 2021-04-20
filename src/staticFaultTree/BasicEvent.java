@@ -112,5 +112,18 @@ public class BasicEvent implements Node{
     }
     
     
+    @Override
+    public boolean equals(Object obj) {
+        return id == ((BasicEvent) obj).id; 
+    }
+
+    public BasicEvent copy() {
+        BasicEvent ret = new BasicEvent(cdf, maintenanceCost, description, id);
+        ret.maintenanceTime = maintenanceTime;
+        ret.parent = parent;
+        return ret;
+    }
+    
+    
     
 }
