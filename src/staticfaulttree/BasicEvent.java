@@ -31,6 +31,13 @@ public class BasicEvent implements Node{
         id = lastId;
         lastId++;
     }
+
+    private BasicEvent(CDFInterface cdf, float maintenanceCost, String description, int id) {
+        this.cdf = cdf;
+        this.maintenanceCost = maintenanceCost;
+        this.description = description;
+        this.id = id;
+    }
     
     
     @Override
@@ -127,3 +134,4 @@ public class BasicEvent implements Node{
     
     
 }
+
