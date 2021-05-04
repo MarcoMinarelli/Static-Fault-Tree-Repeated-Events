@@ -3,6 +3,11 @@ package CDF;
 
 import org.apache.commons.math3.distribution.NormalDistribution;
 
+/**
+ * 
+ * @author Barbuzzi
+ */
+
 public final class NormalDistributionCDF implements CDFInterface{
     private NormalDistribution normal;
 

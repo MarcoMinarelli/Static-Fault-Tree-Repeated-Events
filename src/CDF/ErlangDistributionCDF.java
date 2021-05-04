@@ -3,6 +3,12 @@ package CDF;
 
 import org.apache.commons.math3.distribution.GammaDistribution;
 
+/**
+ * 
+ * @author Barbuzzi
+ */
+
+
 public final class ErlangDistributionCDF implements CDFInterface{
     private GammaDistribution gamma;
 

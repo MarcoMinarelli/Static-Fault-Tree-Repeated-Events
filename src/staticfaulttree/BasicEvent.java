@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * Class that represent a Basic Event
- * @author nicol
+ * @author Barbuzzi
  */
 public class BasicEvent implements Node{
     private CDFInterface cdf;

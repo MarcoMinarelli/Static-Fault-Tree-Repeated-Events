@@ -2,6 +2,10 @@
 package CDF;
 
 import org.apache.commons.math3.distribution.ExponentialDistribution;
+/**
+ * 
+ * @author Barbuzzi
+ */
 
 public final class ExponentialDistributionCDF implements CDFInterface{
     private ExponentialDistribution exp;

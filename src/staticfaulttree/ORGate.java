@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * Class that represent a logical OR gate with N inputs.
- * @author marco
+ * @author Minarelli
  */
 public final class ORGate extends Gate{
     

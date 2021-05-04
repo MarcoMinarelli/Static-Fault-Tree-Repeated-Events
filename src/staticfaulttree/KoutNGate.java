@@ -37,7 +37,7 @@ public final class KoutNGate extends Gate{
      * Methods tha returns the probability that this gate returns a failure at the given time t
      * @param t Time
      * @return  Probability of failure at time t. 
-     * @author Nicole
+     * @author Barbuzzi
      */
     @Override
     public double getProbabilityFault(double t) {

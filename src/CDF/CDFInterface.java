@@ -3,7 +3,7 @@ package CDF;
 
 /**
  *
- * @author nicol
+ * @author Barbuzzi
  */
 public interface CDFInterface {
     double getProbability(double t);
