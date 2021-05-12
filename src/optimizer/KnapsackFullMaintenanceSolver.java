@@ -63,7 +63,7 @@ public class KnapsackFullMaintenanceSolver {
         for(int i=0; i<relPost.length; i++){
             if(solver.bestSolutionContains(i)){
                 for(BasicEvent b:mcs.get(i).getCutSet()){
-                    addBe(ret, b);
+                    addBasicEvent(ret, b);
                 }
             }
         }
@@ -91,7 +91,7 @@ public class KnapsackFullMaintenanceSolver {
         return (long) ((1- fail)*100);
     }
     
-    private void addBe(List<BasicEvent> bes, BasicEvent be){
+    private void addBasicEvent(List<BasicEvent> bes, BasicEvent be){
         boolean isPresent = false; 
         //for(BasicEvent b:bes){
         for(int i=0; i<bes.size()&& !isPresent; i++){

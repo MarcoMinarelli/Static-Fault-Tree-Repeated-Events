@@ -53,7 +53,21 @@ public class ReliabilityOptimizer{
             objective.setCoefficient(var[i], cost[i]);
         }
         objective.setMaximization();
-
+        
+        MPSolver.ResultStatus result = solver.solve();
+        
+        if(result == MPSolver.ResultStatus.OPTIMAL){
+            for(int i=0; i<mcs.size(); i++){
+                if(var[i].solutionValue() == 1){
+                    for(BasicEvent b:mcs.get(i).getCutSet()){
+                        addBasicEvent(ret, b);                        
+                    }
+                }
+            }
+        }
+        
+        
+        
         return ret;
     }
 
@@ -101,5 +115,20 @@ public class ReliabilityOptimizer{
             failuresProb[i][0] = failureProbability * 100;
         }
         return failuresProb;
+    }
+    
+    private void addBasicEvent(List<BasicEvent> bes, BasicEvent be){
+        boolean isPresent = false; 
+        //for(BasicEvent b:bes){
+        for(int i=0; i<bes.size()&& !isPresent; i++){
+            if(bes.get(i).equals(be)){
+                isPresent = true;
+            }            
+        }
+        
+        if(!isPresent){
+            bes.add(be);
+        }
+        
     }
 }
