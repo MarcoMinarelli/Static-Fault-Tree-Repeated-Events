@@ -5,7 +5,7 @@ import java.util.List;
 import minimalcutset.MinimalCutSet;
 
 /**
- * Interface  that define the only method for importance measures.
+ * Interface  that define the two methods for importance measures.
  * @author Barbuzzi
  */
 public interface ImportanceMeasure {

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package optimizer;
 
 import com.google.ortools.algorithms.KnapsackSolver;
@@ -15,7 +10,7 @@ import staticfaulttree.BasicEvent;
  *
  * @author Barbuzzi
  */
-public class KnapsackFullMaintenanceSolver {
+public class KnapsackFullMaintenanceSolver extends Optimizer{
     private static KnapsackFullMaintenanceSolver kfms = new KnapsackFullMaintenanceSolver();
     
     KnapsackSolver solver = new KnapsackSolver(KnapsackSolver.SolverType.KNAPSACK_MULTIDIMENSION_BRANCH_AND_BOUND_SOLVER, "Full Maintenance");
@@ -34,7 +29,7 @@ public class KnapsackFullMaintenanceSolver {
         
         long relPre = 0;
         for(int i=0; i<mcs.size(); i++){
-            relPre += getReliability(mcs.get(i).getCutSet(), testTime);
+            relPre +=( 1 - computeFailureProbability(mcs.get(i).getCutSet(), testTime)) ;
         }
         
        
@@ -44,7 +39,7 @@ public class KnapsackFullMaintenanceSolver {
             long rel = 0;
             for (int j = 0; j < mcs.size(); j++) { //for every OTHER MCS
                 if (j != i) {
-                    rel += getReliability(mcs.get(j).getCutSet(), testTime);
+                    rel +=(1 - computeFailureProbability(mcs.get(j).getCutSet(), testTime));
                 }
             }
             List<BasicEvent> modified = new ArrayList<>();
@@ -54,7 +49,7 @@ public class KnapsackFullMaintenanceSolver {
                 appo.setMaintenanceTime(testTime);
                 modified.add(appo);
             }
-            rel += getReliability(modified, testTime);
+            rel +=(1 - computeFailureProbability(modified, testTime));
 
             relPost[i] = (rel/relPre);
         }
@@ -71,38 +66,18 @@ public class KnapsackFullMaintenanceSolver {
         return ret;
     }
     
+    /**
+     *  
+     * @param mcs
+     * @return 
+     */
     private long[][] getCost(List<MinimalCutSet> mcs){
         long[][] cost = new long[mcs.size()][];
-        
-        for(int i=0; i<mcs.size(); i++){
-            for(BasicEvent b:mcs.get(i).getCutSet())
-                cost[i][0] += b.getMaintenanceCost();
+        double[] costDouble = computeMCSMaintenanceCost(mcs);
+        for(int i = 0; i < mcs.size(); i++){
+            cost[i][0] = (long) (costDouble[i] * 100);
         }
         return cost;
     }
     
-    private long getReliability(List<BasicEvent> bes, double time){
-        float fail = 1;
-        
-        for(BasicEvent b:bes){
-            fail *= b.getProbabilityFault(time);
-
-        }
-        return (long) ((1- fail)*100);
-    }
-    
-    private void addBasicEvent(List<BasicEvent> bes, BasicEvent be){
-        boolean isPresent = false; 
-        //for(BasicEvent b:bes){
-        for(int i=0; i<bes.size()&& !isPresent; i++){
-            if(bes.get(i).equals(be)){
-                isPresent = true;
-            }            
-        }
-        
-        if(!isPresent){
-            bes.add(be);
-        }
-        
-    }
 }

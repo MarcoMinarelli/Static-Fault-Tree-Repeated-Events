@@ -14,7 +14,7 @@ import staticfaulttree.BasicEvent;
  * relative maintenance) in order to obtain a desoder reliability at a given time.
  * @author Minarelli
  */
-public class ReliabilityOptimizer{
+public class ReliabilityOptimizer extends Optimizer{
 
     private static ReliabilityOptimizer opt = new ReliabilityOptimizer();
 
@@ -65,34 +65,21 @@ public class ReliabilityOptimizer{
                 }
             }
         }
-        
-        
-        
         return ret;
     }
 
-    private float computeFailureProbability(List<BasicEvent> l, float t) {
-        float ret = 1;
-        for (BasicEvent be : l) {
-            ret *= be.getProbabilityFault(t);
-        }
-        return ret;
-    }
 
-    private double[] computeMCSMaintenanceCost(List<MinimalCutSet> mcs) {
-        double[] cost = new double[mcs.size()]; //cost of maintenance for every MCS
-        // Computing the maintenance cost of al Minimal Cut Set
-        for (int i = 0; i < mcs.size(); i++) {
-            MinimalCutSet cs = mcs.get(i);
-            long costCs = 0;
-            for (BasicEvent be : cs.getCutSet()) {
-                costCs += be.getMaintenanceCost() * 100;
-            }
-            cost[i] = costCs;
-        }
-        return cost;
-    }
-
+    /**
+     *  Method that computes the failure probabilities of all MCS. 
+     * <\br> The method computes the failure probabilities at the time testTime, but 
+     * i-th MCS, the Failure probability is computed as if the MCS is maintained at time testTime.
+     * So, for that MCS the result is: probability that all other MCS fails at time testTime + probability that the i-th MCS 
+     * fails at the time testTime given that it was maintaine at time startTime
+     * @param mcs The list of all Minimal Cut Set
+     * @param startTime Time value at which the MCS are maintained (see above)
+     * @param testTime Time value at which the test will be performed
+     * @return A matrix (only the first row is not 0) that contains the probaiblity of failure (see above) 
+     */
     private double[][] computeFailureProbabilities(List<MinimalCutSet> mcs, float startTime, float testTime) {
         double[][] failuresProb = new double[mcs.size()][]; // system reliability after MCS maintenance
         for (int i = 0; i < mcs.size(); i++) {
@@ -115,20 +102,5 @@ public class ReliabilityOptimizer{
             failuresProb[i][0] = failureProbability * 100;
         }
         return failuresProb;
-    }
-    
-    private void addBasicEvent(List<BasicEvent> bes, BasicEvent be){
-        boolean isPresent = false; 
-        //for(BasicEvent b:bes){
-        for(int i=0; i<bes.size()&& !isPresent; i++){
-            if(bes.get(i).equals(be)){
-                isPresent = true;
-            }            
-        }
-        
-        if(!isPresent){
-            bes.add(be);
-        }
-        
     }
 }

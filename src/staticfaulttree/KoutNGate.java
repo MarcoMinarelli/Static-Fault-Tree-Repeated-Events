@@ -1,12 +1,11 @@
 package staticfaulttree;
 
 import static java.lang.Math.pow;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 /**
- *  Class that represent a N/N Gate, that is, a gate that let's the failure 
+ *  Class that represent a K/N Gate, that is, a gate that let's the failure 
  *  expand if K out of N inputs are failed.
  * @author Minarelli
  */

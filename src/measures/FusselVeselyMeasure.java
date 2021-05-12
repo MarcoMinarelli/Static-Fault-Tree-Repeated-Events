@@ -16,8 +16,12 @@ public class FusselVeselyMeasure implements ImportanceMeasure{
     public double[] compute(List<MinimalCutSet> mcs, double time) {
         double[] ret = new double[mcs.size()]; 
         
+        double topEvent = TopEventProbabilityCalculator.getInstance().computeProb(mcs, time);
+        
         for(int i=0; i<ret.length; i++){
-            ret[i] = compute(mcs, time, i);
+            //ret[i] = compute(mcs, time, i);
+            ret[i] = computeNumerator(mcs.get(i), time) / topEvent;
+
         }
         
         return ret;
@@ -36,7 +40,13 @@ public class FusselVeselyMeasure implements ImportanceMeasure{
         return prob/topEvent;
     }
     
-    
+    private double computeNumerator(MinimalCutSet m, double time){
+        double prob = 1;
+        for(BasicEvent b:m.getCutSet()){
+             prob *= b.getProbabilityFault(time);
+        }
+        return prob;
+    }
     
     
     
