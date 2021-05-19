@@ -1,6 +1,8 @@
 
 package staticfaulttree;
 
+import java.util.List;
+
 /**
  * Interface that represent the Node in the static fault tree. 
  * @author Minarelli
@@ -27,6 +29,8 @@ public interface Node {
      */
     void removeChild(Node node);
     
+    List<Node> getChild();
+    
     /**
      * Method that adds an output ("parent") to this Gate.
      * @param node The node that is a parent of this gate
@@ -46,4 +50,6 @@ public interface Node {
      * @return True if this Node is a Basic Event, false otherwise.
      */
     boolean isBasicEvent();
+    
+    String getUniqueId();
 }

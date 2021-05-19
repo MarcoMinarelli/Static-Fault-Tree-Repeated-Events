@@ -10,11 +10,14 @@ import java.util.List;
  * @author Minarelli
  */
 public final class KoutNGate extends Gate{
-    public int k;
+    private int k;
+    private int id;
     
     public KoutNGate(int k){
         k = this.k;
         this.gateType = Gate.KoutN;
+        id = lastId;
+        lastId++;
     }
 
     /**
@@ -30,6 +33,8 @@ public final class KoutNGate extends Gate{
             n.addParent(this);
         }
         this.gateType = Gate.KoutN;
+        id = lastId;
+        lastId++;
     }
 
     /**
@@ -67,4 +72,8 @@ public final class KoutNGate extends Gate{
        return (1 - rSys);
     }
     
+       @Override
+    public String getUniqueId() {
+        return "Gate " + id;
+    }
 }

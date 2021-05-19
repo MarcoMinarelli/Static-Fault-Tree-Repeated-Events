@@ -63,6 +63,5 @@ public abstract class Optimizer {
             cost[i] = costCs;
         }
         return cost;
-    }
-    
+    }    
 }

@@ -10,7 +10,7 @@ import java.util.Iterator;
  * @author Minarelli
  */
 public final class ANDGate extends Gate{
-    
+    private int id;
     
     /**
      * Constructor 
@@ -24,10 +24,14 @@ public final class ANDGate extends Gate{
             n.addParent(this);
         }
         this.gateType = Gate.AND;
+        id = lastId;
+        lastId++;
     }
     
     public ANDGate(){
         this.gateType = Gate.AND;
+        id = lastId;
+        lastId++;
     }
     
     
@@ -45,4 +49,10 @@ public final class ANDGate extends Gate{
         }
         return ret;
     }
+    
+      @Override
+    public String getUniqueId() {
+        return "Gate " + id;
+    }
+    
 }

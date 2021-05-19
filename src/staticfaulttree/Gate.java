@@ -19,6 +19,8 @@ public abstract class Gate implements Node {
     public static final int KoutN = 2;
 
     protected int gateType;
+    
+    protected static int lastId = 0;
 
     /**
      * Method that adds an input ("child") to this Gate.
@@ -102,5 +104,12 @@ public abstract class Gate implements Node {
     public int getType() {
         return gateType;
     }
+
+    @Override
+    public List<Node> getChild() {
+        return children;
+    }
+    
+    
 
 }

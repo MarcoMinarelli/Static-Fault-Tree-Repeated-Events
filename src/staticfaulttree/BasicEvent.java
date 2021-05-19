@@ -177,6 +177,16 @@ public class BasicEvent implements Node{
         ret.parent = parent;
         return ret;
     }
+
+    @Override
+    public String getUniqueId() {
+        return "Basic Event " + id;
+    }
+
+    @Override
+    public List<Node> getChild() {
+        throw new UnsupportedOperationException("Child operation on leaf object."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     
     

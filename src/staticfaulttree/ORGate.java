@@ -9,7 +9,7 @@ import java.util.List;
  * @author Minarelli
  */
 public final class ORGate extends Gate{
-    
+    private int id;
     /**
      * Constructor 
      * @param c List of nodes that are OR inputs.
@@ -22,10 +22,14 @@ public final class ORGate extends Gate{
             n.addParent(this);
         }
         this.gateType = Gate.OR;
+        id = lastId;
+        lastId++;
     }
     
     public ORGate(){
         this.gateType = Gate.OR;
+        id = lastId;
+        lastId++;
     }
     
     /**
@@ -40,5 +44,10 @@ public final class ORGate extends Gate{
             ret += i.next().getProbabilityFault(t);
         }
         return ret;
+    }
+    
+       @Override
+    public String getUniqueId() {
+        return "Gate " + id;
     }
 }
