@@ -1,6 +1,7 @@
 package minimalcutset;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +45,12 @@ public final class MOCUSEngine {
     
     
     private void rewriteAnd(Node e, List<Node> row, int index) {
+        row.remove(index);
+        for(Node n: ((Gate) e).getChild()){
+            row.add(n);           
+        }
+        Collections.reverse(row);
+        
         //TODO
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -99,7 +106,7 @@ public final class MOCUSEngine {
     private Result findElementToExpand(List<List<Node>> paths){
         Result ret = new Result(0, 0);
         for(int i = 0; i < paths.size(); i++){ // for row in paths
-            for(int j = 0; j < paths.get(i).size(); i++){// for e in row
+            for(int j = 0; j < paths.get(i).size(); j++){// for e in row
                 if(!paths.get(i).get(j).isBasicEvent()){
                     ret = new Result(i, j);
                 }
