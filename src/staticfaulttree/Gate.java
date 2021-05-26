@@ -13,6 +13,8 @@ public abstract class Gate implements Node {
 
     protected List<Node> children = new ArrayList<>();
     protected List<Node> parents = new ArrayList<>();
+    
+    protected String gateName;
 
     public static final int AND = 1;
     public static final int OR = 0;
@@ -108,6 +110,11 @@ public abstract class Gate implements Node {
     @Override
     public List<Node> getChild() {
         return children;
+    }
+
+    @Override
+    public String toString() {
+        return  gateName;
     }
     
     

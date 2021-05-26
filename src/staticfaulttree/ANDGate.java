@@ -34,6 +34,29 @@ public final class ANDGate extends Gate{
         lastId++;
     }
     
+    /**
+     * Constructor 
+     * @param c List of nodes that are AND inputs.
+     */
+    public ANDGate(List<Node> c, String gateName){
+        Node n;
+        for(Iterator<Node> i = c.iterator(); i.hasNext(); ){
+            n= i.next();
+            addChild(n);
+            n.addParent(this);
+        }
+        this.gateType = Gate.AND;
+        id = lastId;
+        lastId++;
+        this.gateName = gateName;
+    }
+    
+    public ANDGate(String gateName){
+        this.gateType = Gate.AND;
+        id = lastId;
+        lastId++;
+        this.gateName = gateName;
+    }
     
 
     /**

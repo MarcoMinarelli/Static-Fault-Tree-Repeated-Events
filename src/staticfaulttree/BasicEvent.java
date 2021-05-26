@@ -187,6 +187,12 @@ public class BasicEvent implements Node{
     public List<Node> getChild() {
         throw new UnsupportedOperationException("Child operation on leaf object."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public String toString() {
+        return  description;
+    }
+    
     
     
     
