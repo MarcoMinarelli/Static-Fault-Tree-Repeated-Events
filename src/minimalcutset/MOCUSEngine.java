@@ -3,8 +3,11 @@ package minimalcutset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import staticfaulttree.BasicEvent;
 import staticfaulttree.Gate;
 import staticfaulttree.Node;
 
@@ -30,19 +33,75 @@ public final class MOCUSEngine {
 
     public List<MinimalCutSet> getMinimalCutSet(Node topEvent) {
         List<MinimalCutSet> ret = new ArrayList<>();
-        Map<String, List<String>> map = toMap(topEvent);
-
+        List<List<Node>> cs = init(topEvent);
+        
+        List<Set<Node>> css = list2Set(cs);
+        //Collections.sort(css, c);
+        css.sort((Set s1, Set s2) -> {
+            int val; 
+            if(s1.size() == s2.size())
+                val = 0;
+            else
+                if(s1.size() < s2.size())
+                    val = -1;
+            else
+                    val = 1;
+            return val;
+        });
+        
+        for(int i=0; i<css.size(); i++){
+            for(int j=i+1; j<css.size(); j++){
+                if(css.get(i).containsAll(css.get(j)))
+                    css.remove(j);
+            }
+        }
+        
+        for(Set<Node> s:css){
+            MinimalCutSet mcs = new MinimalCutSet();
+            for(Node n:s){
+                mcs.addNode((BasicEvent) n);
+            }
+            ret.add(mcs);
+        }
+        
+        return ret;
+    }
+    
+    private List<Set<Node>> list2Set(List<List<Node>> cs){
+        List<Set<Node>> ret = new ArrayList<>();
+               
+        for(List<Node> n: cs){
+            ret.add(new HashSet<>(n));
+        }
+        
         return ret;
     }
 
-    private void init(/*Map<String, List<String>> map,*/ Node topEvent) {
-        //List<String> top = map.get(topEvent.getUniqueId());
-       // List<List<String>> ps = topToInitPath(top);
+    private List<List<Node>> init(Node topEvent) {
         List<List<Node>> ps = topToInitPathNode(topEvent);
-        Result r = findElementToExpand(ps);
+        
+        
+        while(existExpandableGate(ps)){
+            Result r = findElementToExpand(ps);
+            ps = CSHelper(r, ps);
+        }
+        
+        return ps;
     }
 
-    
+    private boolean existExpandableGate(List<List<Node>> list){
+        boolean isPresent = false;
+        for(int i=0; i<list.size() && !isPresent; i++){
+            for(int j=0; j<list.get(i).size() && !isPresent; j++){
+                
+                if(!list.get(i).get(j).isBasicEvent()){
+                    isPresent = true;
+                }
+            }
+        }
+        
+        return isPresent;
+    }
     
     private void rewriteAnd(Node e, List<Node> row, int index) {
         row.remove(index);
@@ -50,9 +109,6 @@ public final class MOCUSEngine {
             row.add(n);           
         }
         Collections.reverse(row);
-        
-        //TODO
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     private List<List<Node>> rewriteOr(Node e, List<Node> row, int index) {
@@ -114,69 +170,7 @@ public final class MOCUSEngine {
         }
         return ret;
     }
-    
-    private List<List<String>> topToInitPath(List<String> te) {
-        List<List<String>> path = new ArrayList<>();
-        if (Integer.parseInt(te.get(0)) == Gate.AND) {
-            path.add(te.subList(2, te.size()));
-        } else {
-            for (String s : te.subList(2, te.size())) {
-                List<String> ls = new ArrayList<>();
-                ls.add(s);
-                path.add(ls);
-            }
-        }
-        return path;
-    }
 
-    /**
-     * Method that converts the tree in a Map.
-     * <br/> The map has as key the id of the Node and as satellite data the
-     * type of te gate and the list of Node children
-     *
-     * @param topEvent
-     * @return
-     */
-    private Map<String, List<String>> toMap(Node topEvent) {
-        HashMap<String, List<String>> map = new HashMap<>();
-
-        if (topEvent != null) {
-            preOrderVisit(topEvent, map);
-        } else {
-            throw new NullPointerException("Null TopEvent passed");
-        }
-        return map;
-    }
-
-    private void preOrderVisit(Node node, HashMap<String, List<String>> map) {
-        if (node != null) {
-            List<String> l = node2List(node);
-            map.put(l.get(0), l.subList(1, l.size()));
-            if (!node.isBasicEvent()) {
-                for (Node n : node.getChild()) {
-                    preOrderVisit(n, map);
-                }
-            }
-        } else {
-            throw new NullPointerException("Null Node passed");
-        }
-    }
-
-    private List<String> node2List(Node n) {
-        List<String> ret = new ArrayList<>();
-        if (n != null) {
-            if (!n.isBasicEvent()) {
-                ret.add(n.getUniqueId());
-                ret.add(Integer.toString((((Gate) n).getType())));
-                for (Node c : n.getChild()) {
-                    ret.add(c.getUniqueId());
-                }
-            }
-        } else {
-            throw new NullPointerException("Null Node passed");
-        }
-        return ret;
-    }
 }
 
 
