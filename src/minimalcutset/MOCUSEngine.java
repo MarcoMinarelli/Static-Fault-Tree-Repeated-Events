@@ -3,7 +3,6 @@ package minimalcutset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import staticfaulttree.BasicEvent;
@@ -32,9 +31,9 @@ public final class MOCUSEngine {
         List<MinimalCutSet> ret = new ArrayList<>();
 
         List<List<Node>> cs = init(topEvent);
-        
+
         List<Set<Node>> css = list2Set(cs);
-        
+
         css.sort((Set s1, Set s2) -> {
             int val;
             if (s1.size() == s2.size()) {
@@ -47,15 +46,15 @@ public final class MOCUSEngine {
             return val;
         });
 
-  
         for (int i = 0; i < css.size(); i++) {
             for (int j = i + 1; j < css.size(); j++) {
                 if (css.get(j).containsAll(css.get(i))) {
                     css.remove(j);
+                    j = j - 1;
                 }
             }
         }
-      
+
         for (Set<Node> s : css) {
             MinimalCutSet mcs = new MinimalCutSet();
             for (Node n : s) {
@@ -63,7 +62,7 @@ public final class MOCUSEngine {
             }
             ret.add(mcs);
         }
-        
+
         return ret;
     }
 
