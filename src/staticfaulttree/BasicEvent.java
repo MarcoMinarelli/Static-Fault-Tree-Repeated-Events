@@ -10,12 +10,11 @@ import java.util.List;
  * @author Barbuzzi
  */
 public class BasicEvent implements Node{
-    private CDFInterface cdf;
-    private float maintenanceCost;
-    private String description;
+    private final CDFInterface cdf;
+    private final float maintenanceCost;
+    private final String description;
     private double maintenanceTime = 0;
-    private List<Node> parent = new ArrayList();
-    private int id;
+    private final int id;
     private static int lastId = 0;
 
     /**
@@ -75,28 +74,7 @@ public class BasicEvent implements Node{
     }
 
  
-    @Override
-    public void addParent(Node node) {
-        if(node != null){
-            parent.add(node);
-        }
-        else{
-        throw new NullPointerException("Null Node passed."); 
-        }
-        
-    }
-
-    @Override
-    public void removeParent(Node node) {
-        if(node != null){
-             parent.remove(node);
-        }
-        else{
-            throw new NullPointerException("Null Node passed."); 
-        }
-       
-    }
-
+ 
     /**
      * Method that returns true if this node is a basic event
      * @return true
@@ -122,14 +100,7 @@ public class BasicEvent implements Node{
         return description;
     }
 
-    /**
-     * Method that returns the parents of this Node
-     * @return A String containing the description
-     */
-    public List<Node> getParent() {
-        return parent;
-    }
-
+ 
     /**
      * Method that returns the Id of this BasicEvent
      * @return An integer representing the ID
@@ -174,13 +145,7 @@ public class BasicEvent implements Node{
     public BasicEvent copy() {
         BasicEvent ret = new BasicEvent(cdf, maintenanceCost, description, id);
         ret.maintenanceTime = maintenanceTime;
-        ret.parent = parent;
         return ret;
-    }
-
-    @Override
-    public String getUniqueId() {
-        return "Basic Event " + id;
     }
 
     @Override

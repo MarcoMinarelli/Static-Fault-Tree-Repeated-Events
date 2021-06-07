@@ -128,7 +128,7 @@ public final class MOCUSEngine {
         List<List<Node>> updatedPaths = paths;
         Node e = paths.get(res.getFirst()).get(res.getSecond());
         List<Node> row = paths.get(res.getFirst());
-        if (((Gate) e).getType() == Gate.AND) {
+        if (((Gate) e).getType() == Gate.GateTypes.AND) {
             rewriteAnd(e, row, res.getSecond());
         } else {
             updatedPaths.remove(res.getFirst());
@@ -142,7 +142,7 @@ public final class MOCUSEngine {
 
     private List<List<Node>> topToInitPath(Node te) {
         List<List<Node>> ret = new ArrayList<>();
-        if (((Gate) te).getType() == Gate.AND) {
+        if (((Gate) te).getType() == Gate.GateTypes.AND) {
             ret.add(((Gate) te).getChild());
         } else {
             for (Node n : ((Gate) te).getChild()) {

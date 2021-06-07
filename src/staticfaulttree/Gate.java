@@ -12,15 +12,12 @@ import java.util.List;
 public abstract class Gate implements Node {
 
     protected List<Node> children = new ArrayList<>();
-    protected List<Node> parents = new ArrayList<>();
     
     protected String gateName;
+    
+    public enum GateTypes{AND, OR, KoutN};
 
-    public static final int AND = 1;
-    public static final int OR = 0;
-    public static final int KoutN = 2;
-
-    protected int gateType;
+    protected GateTypes gateType;
     
     protected static int lastId = 0;
 
@@ -33,11 +30,9 @@ public abstract class Gate implements Node {
     public void addChild(Node node) {
         if (node != null) {
             children.add(node);
-            node.addParent(this);
         } else {
             throw new NullPointerException("Null Node passed to method");
         }
-
     }
 
     /**
@@ -49,50 +44,14 @@ public abstract class Gate implements Node {
     public void removeChild(Node node) {
         if (node != null) {
             children.remove(node);
-            node.removeParent(this);
         } else {
             throw new NullPointerException("Null Node passed to method");
         }
 
     }
 
-    /**
-     * Method that adds an output ("parent") to this Gate.
-     *
-     * @param node The node that is a parent of this gate
-     */
-    @Override
-    public void addParent(Node node) {
-        if (node != null) {
-            parents.add(node);
 
-        } else {
-            throw new NullPointerException("Null Node passed to method");
-        }
-
-    }
-
-    /**
-     * Method that removes an output ("parent") to this Gate.
-     *
-     * @param node The node that will be removed as parent of this gate
-     */
-    @Override
-    public void removeParent(Node node) {
-        if (node != null) {
-            parents.remove(node);
-
-        } else {
-            throw new NullPointerException("Null Node passed");
-        }
-    }
-
-    /**
-     * Method used to know if this Node is a Basic Event (that is, if one can
-     * call addChild and removeChild without get an Exception)
-     *
-     * @return True if this Node is a Basic Event, false otherwise.
-     */
+    
     @Override
     public boolean isBasicEvent() {
         return false;
@@ -103,7 +62,7 @@ public abstract class Gate implements Node {
      *
      * @return An integer representing the type of this gate
      */
-    public int getType() {
+    public GateTypes getType() {
         return gateType;
     }
 
@@ -115,8 +74,6 @@ public abstract class Gate implements Node {
     @Override
     public String toString() {
         return  gateName;
-    }
-    
-    
+    }   
 
 }
