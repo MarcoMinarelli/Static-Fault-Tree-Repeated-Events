@@ -3,6 +3,7 @@ package minimalcutset;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import staticfaulttree.BasicEvent;
 
 /**
@@ -40,5 +41,23 @@ public class MinimalCutSet {
         }
         cs.add(be);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final MinimalCutSet other = (MinimalCutSet) obj;
+        return cs.equals(other.cs);
+        
+    }
+    
+    
    
 }

@@ -32,7 +32,6 @@ public abstract class Optimizer {
      */
     protected void addBasicEvent(List<BasicEvent> bes, BasicEvent be){
         boolean isPresent = false; 
-        //for(BasicEvent b:bes){
         for(int i=0; i<bes.size()&& !isPresent; i++){
             if(bes.get(i).equals(be)){
                 isPresent = true;
