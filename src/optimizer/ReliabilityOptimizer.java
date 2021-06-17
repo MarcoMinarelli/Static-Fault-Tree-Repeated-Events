@@ -74,7 +74,7 @@ public class ReliabilityOptimizer extends Optimizer{
      * <\br> The method computes the failure probabilities at the time testTime, but 
      * i-th MCS, the Failure probability is computed as if the MCS is maintained at time testTime.
      * So, for that MCS the result is: probability that all other MCS fails at time testTime + probability that the i-th MCS 
-     * fails at the time testTime given that it was maintaine at time startTime
+     * fails at the time testTime given that it was maintained at time startTime
      * @param mcs The list of all Minimal Cut Set
      * @param startTime Time value at which the MCS are maintained (see above)
      * @param testTime Time value at which the test will be performed
@@ -102,5 +102,17 @@ public class ReliabilityOptimizer extends Optimizer{
             failuresProb[i][0] = failureProbability * 100;
         }
         return failuresProb;
+    }
+    
+     void combinations(List<MinimalCutSet> mcs, int len, int startPosition, List<MinimalCutSet> result, List<List<MinimalCutSet>> res){
+        if (len == 0){
+            
+            res.add(result);
+            return;
+        }       
+        for (int i = startPosition; i <= mcs.size() -len; i++){
+            result.add(result.size() - len, mcs.get(i));
+            combinations(mcs, len-1, i+1, result, res);
+        }
     }
 }
