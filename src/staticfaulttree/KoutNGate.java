@@ -15,7 +15,7 @@ public final class KoutNGate extends Gate{
     
     public KoutNGate(int k){
         k = this.k;
-        this.gateType = Gate.KoutN;
+        this.gateType = GateTypes.KoutN;
         id = lastId;
         lastId++;
     }
@@ -30,9 +30,8 @@ public final class KoutNGate extends Gate{
         for(Iterator<Node> i = c.iterator(); i.hasNext(); ){
             n= i.next();
             addChild(n);
-            n.addParent(this);
         }
-        this.gateType = Gate.KoutN;
+        this.gateType = GateTypes.KoutN;
         id = lastId;
         lastId++;
     }
@@ -72,8 +71,4 @@ public final class KoutNGate extends Gate{
        return (1 - rSys);
     }
     
-       @Override
-    public String getUniqueId() {
-        return "Gate " + id;
-    }
 }

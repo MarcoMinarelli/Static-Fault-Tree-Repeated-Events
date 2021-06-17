@@ -21,19 +21,40 @@ public final class ANDGate extends Gate{
         for(Iterator<Node> i = c.iterator(); i.hasNext(); ){
             n= i.next();
             addChild(n);
-            n.addParent(this);
         }
-        this.gateType = Gate.AND;
+        this.gateType = GateTypes.AND;
         id = lastId;
         lastId++;
     }
     
     public ANDGate(){
-        this.gateType = Gate.AND;
+        this.gateType = GateTypes.AND;
         id = lastId;
         lastId++;
     }
     
+    /**
+     * Constructor 
+     * @param c List of nodes that are AND inputs.
+     */
+    public ANDGate(List<Node> c, String gateName){
+        Node n;
+        for(Iterator<Node> i = c.iterator(); i.hasNext(); ){
+            n= i.next();
+            addChild(n);
+        }
+        this.gateType = GateTypes.AND;
+        id = lastId;
+        lastId++;
+        this.gateName = gateName;
+    }
+    
+    public ANDGate(String gateName){
+        this.gateType = GateTypes.AND;
+        id = lastId;
+        lastId++;
+        this.gateName = gateName;
+    }
     
 
     /**
@@ -48,11 +69,6 @@ public final class ANDGate extends Gate{
             ret *= i.next().getProbabilityFault(t);
         }
         return ret;
-    }
-    
-      @Override
-    public String getUniqueId() {
-        return "Gate " + id;
     }
     
 }
