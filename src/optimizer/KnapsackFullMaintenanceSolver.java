@@ -26,25 +26,23 @@ public class KnapsackFullMaintenanceSolver extends Optimizer {
     public List<BasicEvent> optimize(List<MinimalCutSet> mcs, float testTime, float budget) {
         List<BasicEvent> ret = new ArrayList<>();
 
-        long[] bud = {(long) budget * 100}; //capacità
-        long[][] cost = getCost(mcs); //pesi
+        long[] bud = {(long) budget * 100}; //capacity
+        long[][] cost = getMCSMaintenanceCost(mcs); //weights
 
         long relPre = 0;
         for (int i = 0; i < mcs.size(); i++) {
             relPre += (1 - computeFailureProbability(mcs.get(i).getCutSet(), testTime));
         }
 
-        long[] relPost = new long[mcs.size()]; //guadagno
+        long[] gain = new long[mcs.size()]; //gain
         for (int i = 0; i < mcs.size(); i++) {
-            long rel = computeRemainingCutSetsReliability(mcs, i, testTime);
-
-            rel += (1 - computeFailureProbability(getMaintainedMCS(mcs.get(i), testTime), testTime));
-
-            relPost[i] = (rel / relPre);
+            long  relPost = (long) (1 - computeFailureProbability(getMaintainedMCS(mcs.get(i), testTime), testTime));
+            relPost += computeRemainingCutSetsReliability(mcs, i, testTime);
+            gain[i] = (relPost / relPre);
         }
 
-        solver.init(relPost, cost, bud);
-        for (int i = 0; i < relPost.length; i++) {
+        solver.init(gain, cost, bud);
+        for (int i = 0; i < gain.length; i++) {
             if (solver.bestSolutionContains(i)) {
                 for (BasicEvent b : mcs.get(i).getCutSet()) {
                     addBasicEvent(ret, b);
@@ -60,34 +58,12 @@ public class KnapsackFullMaintenanceSolver extends Optimizer {
         long rel = 0;
         for (int j = 0; j < mcs.size(); j++) { //for every OTHER MCS
             if (j != index) {
-                if (!contains(mcs.get(j), cs)) { //if there are not basic event in common
-                    rel += (1 - computeFailureProbability(mcs.get(j).getCutSet(), testTime));
-                } else {
-                    List<BasicEvent> modified = new ArrayList<>();
-                    BasicEvent appo;
-                    for (BasicEvent be : mcs.get(j).getCutSet()) {
-                        if (cs.getCutSet().contains(be)) {
-                            appo = be.copy();
-                            appo.setMaintenanceTime(testTime);
-                            modified.add(appo);
-                        } else {
-                            modified.add(be);
-                        }
 
-                    }
-                    rel += (1 - computeFailureProbability(modified, testTime));
-                }
+                rel += (1 - computeFailureProbability(mcs.get(j).getCutSet(), testTime));
+
             }
         }
         return rel;
-    }
-
-    private boolean contains(MinimalCutSet mcsi, MinimalCutSet mcsj) {
-        boolean found = false;
-        for (int i = 0; i < mcsi.getCutSet().size() && !found; i++) {
-            found = mcsj.getCutSet().contains(mcsi.getCutSet().get(i));
-        }
-        return found;
     }
 
     private List<BasicEvent> getMaintainedMCS(MinimalCutSet cs, float testTime) {
@@ -101,12 +77,8 @@ public class KnapsackFullMaintenanceSolver extends Optimizer {
         return modified;
     }
 
-    /**
-     *
-     * @param mcs
-     * @return
-     */
-    private long[][] getCost(List<MinimalCutSet> mcs) {
+
+    private long[][] getMCSMaintenanceCost(List<MinimalCutSet> mcs) {
         long[][] cost = new long[mcs.size()][];
         double[] costDouble = computeMCSMaintenanceCost(mcs);
         for (int i = 0; i < mcs.size(); i++) {
