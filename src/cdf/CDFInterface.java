@@ -1,5 +1,5 @@
 
-package CDF;
+package cdf;
 
 /**
  *

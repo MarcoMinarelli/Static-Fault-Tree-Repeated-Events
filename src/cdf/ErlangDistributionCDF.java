@@ -1,5 +1,5 @@
 
-package CDF;
+package cdf;
 
 import org.apache.commons.math3.distribution.GammaDistribution;
 

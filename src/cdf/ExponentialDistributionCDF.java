@@ -1,5 +1,5 @@
 
-package CDF;
+package cdf;
 
 import org.apache.commons.math3.distribution.ExponentialDistribution;
 /**
@@ -15,6 +15,7 @@ public final class ExponentialDistributionCDF implements CDFInterface{
     }
 
    
+    @Override
     public double getProbability(double t) {
         return exp.cumulativeProbability(t);
     }

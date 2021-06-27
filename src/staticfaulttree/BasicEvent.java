@@ -1,7 +1,7 @@
 
 package staticfaulttree;
 
-import CDF.CDFInterface;
+import cdf.CDFInterface;
 import java.util.ArrayList;
 import java.util.List;
 

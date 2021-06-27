@@ -57,7 +57,5 @@ public class MinimalCutSet {
         return cs.equals(other.cs);
         
     }
-    
-    
-   
+       
 }

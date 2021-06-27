@@ -58,12 +58,36 @@ public class KnapsackFullMaintenanceSolver extends Optimizer {
         long rel = 0;
         for (int j = 0; j < mcs.size(); j++) { //for every OTHER MCS
             if (j != index) {
+				if (!contains(mcs.get(j), cs)) { //if there are not basic event in common
+                    rel += (1 - computeFailureProbability(mcs.get(j).getCutSet(), testTime));
+                } else {
+                    List<BasicEvent> modified = new ArrayList<>();
+                    BasicEvent appo;
+                    for (BasicEvent be : mcs.get(j).getCutSet()) {
+                        if (cs.getCutSet().contains(be)) {
+                            appo = be.copy();
+                            appo.setMaintenanceTime(testTime);
+                            modified.add(appo);
+                        } else {
+                            modified.add(be);
+                        }
 
+                    }
+                    rel += (1 - computeFailureProbability(modified, testTime));
+                }
                 rel += (1 - computeFailureProbability(mcs.get(j).getCutSet(), testTime));
 
             }
         }
         return rel;
+    }
+    
+    private boolean contains(MinimalCutSet mcsi, MinimalCutSet mcsj) {
+        boolean found = false;
+        for (int i = 0; i < mcsi.getCutSet().size() && !found; i++) {
+            found = mcsj.getCutSet().contains(mcsi.getCutSet().get(i));
+        }
+        return found;
     }
 
     private List<BasicEvent> getMaintainedMCS(MinimalCutSet cs, float testTime) {

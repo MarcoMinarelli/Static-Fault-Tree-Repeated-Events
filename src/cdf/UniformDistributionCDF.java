@@ -1,5 +1,5 @@
 
-package CDF;
+package cdf;
        
 public final class UniformDistributionCDF implements CDFInterface{
     private double a; //start period
