@@ -19,13 +19,9 @@ public class FusselVeselyMeasure implements ImportanceMeasure{
         double topEvent = TopEventProbabilityCalculator.getInstance().computeProb(mcs, time);
         
         for(int i=0; i<ret.length; i++){
-            //ret[i] = compute(mcs, time, i);
             ret[i] = computeNumerator(mcs.get(i), time) / topEvent;
-
         }
-        
         return ret;
-        
     }
 
     @Override

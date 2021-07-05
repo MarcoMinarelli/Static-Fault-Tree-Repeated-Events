@@ -1,13 +1,13 @@
 package staticfaulttree;
 
 import cdf.CDFInterface;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import utils.GraphSearcher;
+import utils.SearchResult;
 import staticfaulttree.Gate.GateTypes;
 
 /**
+ * Class (that implements a Builder pattern) that provides an alternative way
+ * fir creating the Static Fault Tree.
  *
  * @author Minarelli
  */
@@ -16,6 +16,13 @@ public class StaticFaultTreeBuilder {
     private Node top;
     private Node current;
 
+    /**
+     * Constructor of the builder. It starts the tree construction. This
+     * constructor puts as root of the tree (a.k.a. Top Event) a gate.
+     *
+     * @param type Top event type (And/Ot)
+     * @param varnName Name of the associate variable at the Top Event
+     */
     public StaticFaultTreeBuilder(GateTypes type, String varnName) {
         switch (type) {
             case AND: {
@@ -30,12 +37,37 @@ public class StaticFaultTreeBuilder {
         current = top;
     }
 
+    /**
+     * Constructor of the builder. It starts the tree construction.This
+     * constructor puts as root of the tree (a.k.a.Top Event) a Basic Event
+     * (this means that no children can be added).
+     *
+     * @param cdf The cumulative distribution function of the Basic Event
+     * @param maintenanceCost Basic Event maintenance cost
+     * @param varName Associate varible name
+     */
+    public StaticFaultTreeBuilder(CDFInterface cdf, float maintenanceCost, String varName) {
+        top = new BasicEvent(cdf, maintenanceCost, varName);
+        current = top;
+    }
+
+    /**
+     * Method that returns the tree.
+     *
+     * @return The Top event of the builded tree
+     */
     public Node build() {
         return top;
     }
 
+    /**
+     * Method that allows to add an And Gate to the current gate.
+     *
+     * @param varName Associate varible name
+     * @return An instance of ths builder
+     */
     public StaticFaultTreeBuilder addANDGate(String varName) {
-        SearchResult sr = getNodeByName(varName);
+        SearchResult sr = GraphSearcher.getNodeByName(varName, top);
         if (sr.isPresent()) {
             current.addChild(sr.getNode());
         } else {
@@ -44,8 +76,14 @@ public class StaticFaultTreeBuilder {
         return this;
     }
 
+    /**
+     * Method that allows to add an Or Gate to the current gate.
+     *
+     * @param varName Associate varible name
+     * @return An instance of this builder
+     */
     public StaticFaultTreeBuilder addORGate(String varName) {
-        SearchResult sr = getNodeByName(varName);
+        SearchResult sr = GraphSearcher.getNodeByName(varName, top);
         if (sr.isPresent()) {
             current.addChild(sr.getNode());
         } else {
@@ -54,8 +92,16 @@ public class StaticFaultTreeBuilder {
         return this;
     }
 
+    /**
+     * Method that allows to add a Basic Event to the current gate.
+     *
+     * @param cdf The cumulative distribution function of the Basic Event
+     * @param maintenanceCost Basic Event maintenance cost
+     * @param varName Associate varible name
+     * @return An instance of this builder
+     */
     public StaticFaultTreeBuilder addBasicEvent(CDFInterface cdf, float maintenanceCost, String varName) {
-        SearchResult sr = getNodeByName(varName);
+        SearchResult sr = GraphSearcher.getNodeByName(varName, top);
         if (sr.isPresent()) {
             current.addChild(sr.getNode());
         } else {
@@ -65,63 +111,12 @@ public class StaticFaultTreeBuilder {
     }
 
     public StaticFaultTreeBuilder setCurrent(String varName) {
-        SearchResult sr = getNodeByName(varName);
+        SearchResult sr = GraphSearcher.getNodeByName(varName, top);
         if (sr.isPresent()) {
             current = sr.getNode();
         } else {
             throw new IllegalArgumentException("The given variable name is not present in the tree");
         }
         return this;
-    }
-
-    private SearchResult getNodeByName(String varName) {
-        Set<Node> visited = new HashSet<>();
-        LinkedList<Node> queue = new LinkedList<>();
-
-        visited.add(top);
-        queue.add(top);
-        SearchResult res = new SearchResult(false, null);
-
-        boolean found = false;
-
-        while (!queue.isEmpty() && !found) {
-            Node n = queue.poll();
-            if (n.toString().equals(varName)) {
-                res = new SearchResult(true, n);
-                found = true;
-            } else {
-                if (n.isBasicEvent()) {
-                    visited.add(n);
-                } else {
-                    for (Node nn : n.getChild()) {
-                        if (!visited.contains(nn)) {
-                            queue.add(nn);
-                            visited.add(nn);
-                        }
-                    }
-                }
-            }
-        }
-        return res;
-    }
-
-}
-
-final class SearchResult {
-
-    private final boolean present;
-    private final Node node;
-
-    public SearchResult(boolean isPresent, Node node) {
-        this.present = isPresent;
-        this.node = node;
-    }
-
-    public boolean isPresent() {
-        return present;
-    }
-
-    public Node getNode() {
-        return node;
     }
 }

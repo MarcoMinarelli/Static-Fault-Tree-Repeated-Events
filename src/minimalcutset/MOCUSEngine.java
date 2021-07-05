@@ -15,14 +15,17 @@ import staticfaulttree.Node;
  */
 public final class MOCUSEngine {
 
-	private static final MOCUSEngine instance = new MOCUSEngine();
-		
-    private MOCUSEngine() {}
-
-    public static MOCUSEngine getInstance() {
-        return MOCUSEngineHolder.instance;
+    private MOCUSEngine() {
     }
 
+    public static MOCUSEngine getInstance() {
+        return MOCUSEngineHolder.INSTANCE;
+    }
+
+    private static class MOCUSEngineHolder {
+
+        private static final MOCUSEngine INSTANCE = new MOCUSEngine();
+    }
 
     public List<MinimalCutSet> getMinimalCutSet(Node topEvent) {
         List<MinimalCutSet> ret = new ArrayList<>();
