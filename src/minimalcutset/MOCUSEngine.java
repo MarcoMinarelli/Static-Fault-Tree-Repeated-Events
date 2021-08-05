@@ -15,6 +15,7 @@ import staticfaulttree.Node;
  */
 public final class MOCUSEngine {
 
+    private static Node top;
     private MOCUSEngine() {
     }
 
@@ -28,6 +29,7 @@ public final class MOCUSEngine {
     }
 
     public List<MinimalCutSet> getMinimalCutSet(Node topEvent) {
+        top = topEvent;
         List<MinimalCutSet> ret = new ArrayList<>();
 
         List<List<Node>> cs = init(topEvent);
@@ -103,7 +105,7 @@ public final class MOCUSEngine {
 
     private void rewriteAnd(Node e, List<Node> row, int index) {
         row.remove(index);
-        for (Node n : ((Gate) e).getChild()) {
+        for (Node n : ((Gate) e).getChildren()) {
             row.add(n);
         }
         Collections.reverse(row);
@@ -113,10 +115,10 @@ public final class MOCUSEngine {
         List<List<Node>> newRows = new ArrayList<>();
         List<Node> x = row;
         x.remove(index);
-        for (Node n : ((Gate) e).getChild()) {
+        for (Node n : ((Gate) e).getChildren()) {
             List<Node> loc = new ArrayList<>();
             loc.add(n);
-            for (Node n1 : x) {
+            for (Node n1 : row) {
                 loc.add(n1);
             }
             newRows.add(loc);
@@ -126,8 +128,10 @@ public final class MOCUSEngine {
 
     private List<List<Node>> CSHelper(Result res, List<List<Node>> paths) {
         List<List<Node>> updatedPaths = paths;
+        
         Node e = paths.get(res.getFirst()).get(res.getSecond());
         List<Node> row = paths.get(res.getFirst());
+        
         if (((Gate) e).getType() == Gate.GateTypes.AND) {
             rewriteAnd(e, row, res.getSecond());
         } else {
@@ -143,9 +147,9 @@ public final class MOCUSEngine {
     private List<List<Node>> topToInitPath(Node te) {
         List<List<Node>> ret = new ArrayList<>();
         if (((Gate) te).getType() == Gate.GateTypes.AND) {
-            ret.add(((Gate) te).getChild());
+            ret.add(((Gate) te).getChildren());
         } else {
-            for (Node n : ((Gate) te).getChild()) {
+            for (Node n : ((Gate) te).getChildren()) {
                 List<Node> ln = new ArrayList<>();
                 ln.add(n);
                 ret.add(ln);
@@ -156,10 +160,12 @@ public final class MOCUSEngine {
 
     private Result findElementToExpand(List<List<Node>> paths) {
         Result ret = new Result(0, 0);
-        for (int i = 0; i < paths.size(); i++) { // for row in paths
-            for (int j = 0; j < paths.get(i).size(); j++) {// for e in row
+        boolean found = false;
+        for (int i = 0; i < paths.size() && !found; i++) { // for row in paths
+            for (int j = 0; j < paths.get(i).size() && !found; j++) {// for e in row
                 if (!paths.get(i).get(j).isBasicEvent()) {
                     ret = new Result(i, j);
+                    //found = true;
                 }
             }
         }

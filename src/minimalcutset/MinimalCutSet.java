@@ -2,8 +2,12 @@
 package minimalcutset;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 import staticfaulttree.BasicEvent;
 
 /**
@@ -11,15 +15,15 @@ import staticfaulttree.BasicEvent;
  * @author Minarelli
  */
 public class MinimalCutSet {
-    List<BasicEvent> cs;
+    Set<BasicEvent> cs;
 
 
     public MinimalCutSet() {
-        cs = new ArrayList<>();
+        cs = new HashSet<>();
     }
 
     public List<BasicEvent> getCutSet() {
-        return cs;
+        return cs.stream().sorted((e1, e2) -> e1.getDescription().compareTo(e2.getDescription())).collect(Collectors.toList());
     }
     
     
@@ -36,10 +40,9 @@ public class MinimalCutSet {
         if(be == null){
             throw new NullPointerException("Null Node passed");
         }
-        if(cs.contains(be)){
+        if(!cs.add(be)){
             throw new IllegalArgumentException("A Minimal Cut set cannot contains the same Basic Event twice");
         }
-        cs.add(be);
     }
 
     @Override
@@ -56,6 +59,13 @@ public class MinimalCutSet {
         final MinimalCutSet other = (MinimalCutSet) obj;
         return cs.equals(other.cs);
         
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 97 * hash + Objects.hashCode(this.cs);
+        return hash;
     }
        
 }

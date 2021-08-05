@@ -2,6 +2,8 @@ package staticfaulttree;
 
 import java.util.ArrayList;
 import java.util.List;
+import utils.GraphSearcher;
+import utils.SearchResult;
 
 /**
  * Class that represent a Gate. <br/> This class is used as a common class that
@@ -12,13 +14,15 @@ import java.util.List;
 public abstract class Gate implements Node {
 
     protected List<Node> children = new ArrayList<>();
-    
+
     protected String gateName;
-    
-    public enum GateTypes{AND, OR, KoutN};
+
+    public enum GateTypes {
+        AND, OR, KoutN
+    };
 
     protected GateTypes gateType;
-    
+
     protected static int lastId = 0;
 
     /**
@@ -50,8 +54,6 @@ public abstract class Gate implements Node {
 
     }
 
-
-    
     @Override
     public boolean isBasicEvent() {
         return false;
@@ -66,14 +68,47 @@ public abstract class Gate implements Node {
         return gateType;
     }
 
+    public String getGateName() {
+        return gateName;
+    }
+
     @Override
-    public List<Node> getChild() {
+    public List<Node> getChildren() {
         return children;
     }
 
     @Override
     public String toString() {
-        return  gateName;
-    }   
+        return gateName;
+    }
+
+    public Node copy() {
+        Node ret = null;
+        if (this.gateType == GateTypes.AND) {
+            ret = new ANDGate(gateName);
+        } else if (this.gateType == GateTypes.OR) {
+            ret = new ORGate(gateName);
+        }
+        for (Node n : children) {
+            if (n.isBasicEvent()) {
+                SearchResult sr = GraphSearcher.getNodeByName(((BasicEvent) n).getDescription(), this);
+                if (sr.isPresent()) {
+                    ret.addChild(sr.getNode());
+                } else {
+                    ret.addChild(((BasicEvent) n).copy());
+                }
+            } else {
+                SearchResult sr = GraphSearcher.getNodeByName(((Gate) n).getGateName(), this);
+                if (sr.isPresent()) {
+                    ret.addChild(sr.getNode());
+                } else {
+                    ret.addChild(((Gate) n).copy());
+                }
+                
+            }
+        }
+
+        return ret;
+    }
 
 }

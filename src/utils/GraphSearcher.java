@@ -19,7 +19,7 @@ public class GraphSearcher {
     }
 
     /**
-     * MEthod that given the TopEvent returns all the BasicEvents of the SFT
+     * Method that given the TopEvent returns all the BasicEvents of the SFT
      * @param top Node representing the Top Event of the SFT
      * @return Lst of all the BasicEvents in the tree
      */
@@ -39,7 +39,7 @@ public class GraphSearcher {
                 visited.add(n);
                 ret.add((BasicEvent) n);
             } else {
-                for (Node nn : n.getChild()) {
+                for (Node nn : n.getChildren()) {
                     if (!visited.contains(nn)) {
                         queue.add(nn);
                         visited.add(nn);
@@ -70,7 +70,7 @@ public class GraphSearcher {
                 if (n.isBasicEvent()) {
                     visited.add(n);
                 } else {
-                    for (Node nn : n.getChild()) {
+                    for (Node nn : n.getChildren()) {
                         if (!visited.contains(nn)) {
                             queue.add(nn);
                             visited.add(nn);

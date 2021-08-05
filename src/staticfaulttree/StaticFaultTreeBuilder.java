@@ -1,6 +1,8 @@
 package staticfaulttree;
 
 import cdf.CDFInterface;
+import java.util.ArrayList;
+import java.util.List;
 import utils.GraphSearcher;
 import utils.SearchResult;
 import staticfaulttree.Gate.GateTypes;
@@ -110,6 +112,12 @@ public class StaticFaultTreeBuilder {
         return this;
     }
 
+    /**
+     * Method that sets the current node of the Tree.
+     * Noe that future calls to addXXX or remove will work on this node.
+     * @param varName Associate variable name
+     * @return An instance of this builder
+     */
     public StaticFaultTreeBuilder setCurrent(String varName) {
         SearchResult sr = GraphSearcher.getNodeByName(varName, top);
         if (sr.isPresent()) {
@@ -118,5 +126,45 @@ public class StaticFaultTreeBuilder {
             throw new IllegalArgumentException("The given variable name is not present in the tree");
         }
         return this;
+    } 
+    
+    /**
+     * Method that removes and returns the passed nofe of te tree from the current gate.
+     * @param varName Associate variable name
+     * @return An instance of this builder
+     */
+    public List<Node> removeAndReturns(String varName){
+        List<Node> ret = new ArrayList<>();
+        if(!current.isBasicEvent()){
+            for(Node n : current.getChildren()){
+                if(n.isBasicEvent() && ((BasicEvent) n).getDescription().equals(varName) ){
+                    ret.add(n);
+                }else if(((Gate) n).getGateName().equals(varName)){
+                    ret.add(n);
+                }
+            }
+        }else{
+            throw new IllegalArgumentException("Current node is a BasicEvent, does not have any children");
+        }
+        return ret;
     }
+    
+    /**
+     * Method that removes and returns the passed nofe of te tree from the current gate.
+     * @param varName Associate variable name
+     */
+    public void removeAndDelete(String varName){
+        if(!current.isBasicEvent()){
+            for(Node n : current.getChildren()){
+                if(n.isBasicEvent() && ((BasicEvent) n).getDescription().equals(varName) ){
+                    current.removeChild(n);
+                }else if(((Gate) n).getGateName().equals(varName)){
+                    current.removeChild(n);
+                }
+            }
+        }else{
+            throw new IllegalArgumentException("Current node is a BasicEvent, does not have any children");
+        }
+    }
+    
 }

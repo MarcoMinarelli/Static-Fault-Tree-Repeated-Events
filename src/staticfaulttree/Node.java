@@ -29,7 +29,7 @@ public interface Node {
      */
     void removeChild(Node node);
     
-    List<Node> getChild();
+    List<Node> getChildren();
      /**
      * Method used to know if this Node is a Basic Event (that is, if one can
      * call addChild and removeChild without get an Exception)
