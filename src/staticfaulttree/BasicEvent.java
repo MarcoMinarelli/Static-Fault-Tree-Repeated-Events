@@ -142,6 +142,7 @@ public class BasicEvent implements Node{
      * reference but a newly created object. 
      * @return A copy of this object
      */
+    @Override
     public BasicEvent copy() {
         BasicEvent ret = new BasicEvent(cdf, maintenanceCost, description, id);
         ret.maintenanceTime = maintenanceTime;

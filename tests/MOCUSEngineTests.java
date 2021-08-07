@@ -74,7 +74,7 @@ public class MOCUSEngineTests {
                 .addBasicEvent(new ExponentialDistributionCDF(0.5), 10, "D4")
                 .addBasicEvent(new ExponentialDistributionCDF(0.5), 10, "D9")
                 .build();
-        mcs = MOCUSEngine.getInstance().getMinimalCutSet(((Gate) top).copy());
+        mcs = MOCUSEngine.getInstance().getMinimalCutSet(top);
     }
 
     @Test

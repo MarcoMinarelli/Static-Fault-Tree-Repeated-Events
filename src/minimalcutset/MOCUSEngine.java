@@ -15,7 +15,6 @@ import staticfaulttree.Node;
  */
 public final class MOCUSEngine {
 
-    private static Node top;
     private MOCUSEngine() {
     }
 
@@ -29,10 +28,10 @@ public final class MOCUSEngine {
     }
 
     public List<MinimalCutSet> getMinimalCutSet(Node topEvent) {
-        top = topEvent;
+        Node top = topEvent.copy();
         List<MinimalCutSet> ret = new ArrayList<>();
 
-        List<List<Node>> cs = init(topEvent);
+        List<List<Node>> cs = init(top);
 
         List<Set<Node>> css = list2Set(cs);
 

@@ -1,17 +1,28 @@
 
 package measures;
 
-import java.util.List;
-import minimalcutset.MinimalCutSet;
-
 /**
  * Interface  that define the two methods for importance measures.
  * @author Barbuzzi
  */
-public interface ImportanceMeasure {
+public class ImportanceMeasure<T> {
     
-    public double[] compute(List<MinimalCutSet> mcs, double time);
+    private T treeElement;
+    private double value;
+
+    public ImportanceMeasure(T treeElement, double value) {
+        this.treeElement = treeElement;
+        this.value = value;
+    }
+
+    public T getTreeElement() {
+        return treeElement;
+    }
+
+    public double getValue() {
+        return value;
+    }
     
-    public double compute(List<MinimalCutSet> mcs, double time, int index);
+    
     
 }

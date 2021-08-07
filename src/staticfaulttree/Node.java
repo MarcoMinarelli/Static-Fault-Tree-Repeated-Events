@@ -37,4 +37,6 @@ public interface Node {
      */
     boolean isBasicEvent();
     
+    Node copy();
+    
 }

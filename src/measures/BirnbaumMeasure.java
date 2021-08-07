@@ -2,6 +2,7 @@
 package measures;
 
 import cdf.ConstantDistribution;
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.util.ArrayList;
 import java.util.List;
 import minimalcutset.MinimalCutSet;
@@ -22,10 +23,11 @@ public class BirnbaumMeasure {
         return bm;
     }
 
-    public double[] compute(List<MinimalCutSet> mcs, double time, List<BasicEvent> bes){
-        double[] ret = new double[bes.size()];
+    public List<ImportanceMeasure<BasicEvent>> compute(List<MinimalCutSet> mcs, double time, List<BasicEvent> bes){
+        
+        List<ImportanceMeasure<BasicEvent>> ret = new ArrayList<>();
         for(int i = 0; i < bes.size(); i++){
-            ret[i] = compute(mcs, time, i, bes);
+            ret.add(new ImportanceMeasure<BasicEvent>(bes.get(i), compute(mcs, time, i, bes)));
         }
         return ret;
     }

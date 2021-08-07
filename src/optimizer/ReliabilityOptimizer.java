@@ -21,7 +21,7 @@ public class ReliabilityOptimizer extends Optimizer {
     private ReliabilityOptimizer() {
     }
 
-    private static ReliabilityOptimizer getInstance() {
+    public static ReliabilityOptimizer getInstance() {
         return opt;
     }
 

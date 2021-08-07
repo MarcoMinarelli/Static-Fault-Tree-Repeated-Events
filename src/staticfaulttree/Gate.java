@@ -82,6 +82,7 @@ public abstract class Gate implements Node {
         return gateName;
     }
 
+    @Override
     public Node copy() {
         Node ret = null;
         if (this.gateType == GateTypes.AND) {

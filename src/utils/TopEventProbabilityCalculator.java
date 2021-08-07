@@ -29,6 +29,9 @@ public class TopEventProbabilityCalculator {
             probTot += probMcs;
         }
         
+      /*  if(probTot > 1){
+            probTot = 1;
+        }*/
         return probTot;
     }
     

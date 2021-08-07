@@ -1,6 +1,7 @@
 
 package measures;
 
+import java.util.ArrayList;
 import java.util.List;
 import minimalcutset.MinimalCutSet;
 import staticfaulttree.BasicEvent;
@@ -10,21 +11,21 @@ import utils.TopEventProbabilityCalculator;
  *
  * @author Barbuzzi
  */
-public class FusselVeselyMeasure implements ImportanceMeasure{
+public class FusselVeselyMeasure{
 
-    @Override
-    public double[] compute(List<MinimalCutSet> mcs, double time) {
-        double[] ret = new double[mcs.size()]; 
+
+    public List<ImportanceMeasure<MinimalCutSet>> compute(List<MinimalCutSet> mcs, double time) {
+        List<ImportanceMeasure<MinimalCutSet>> ret = new ArrayList<>();
         
         double topEvent = TopEventProbabilityCalculator.getInstance().computeProb(mcs, time);
         
-        for(int i=0; i<ret.length; i++){
-            ret[i] = computeNumerator(mcs.get(i), time) / topEvent;
+        for(int i=0; i<mcs.size(); i++){
+            ret.add(new ImportanceMeasure<MinimalCutSet>(mcs.get(i), computeNumerator(mcs.get(i), time) / topEvent));
         }
         return ret;
     }
 
-    @Override
+
     public double compute(List<MinimalCutSet> mcs, double time, int index) {
         double topEvent = TopEventProbabilityCalculator.getInstance().computeProb(mcs, time);
         
