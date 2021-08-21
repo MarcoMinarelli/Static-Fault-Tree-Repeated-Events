@@ -18,9 +18,5 @@ public final class ExponentialDistributionCDF implements CDFInterface{
     @Override
     public double getProbability(double t) {
         return exp.cumulativeProbability(t);
-    }
-    
-    
-    
-    
+    }   
 }

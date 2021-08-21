@@ -2,7 +2,6 @@
 package measures;
 
 import cdf.ConstantDistribution;
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.util.ArrayList;
 import java.util.List;
 import minimalcutset.MinimalCutSet;
@@ -13,7 +12,7 @@ import utils.TopEventProbabilityCalculator;
  * CLass that permits to compute the Birnbaum Importance Measure
  * @author Minarelli
  */
-public class BirnbaumMeasure {
+public final class BirnbaumMeasure implements ImportanceMeasure{
     
     private static final BirnbaumMeasure bm = new BirnbaumMeasure();
     
@@ -23,11 +22,11 @@ public class BirnbaumMeasure {
         return bm;
     }
 
-    public List<ImportanceMeasure<BasicEvent>> compute(List<MinimalCutSet> mcs, double time, List<BasicEvent> bes){
+    public List<ImportanceMeasureValue<BasicEvent>> compute(List<MinimalCutSet> mcs, double time, List<BasicEvent> bes){
         
-        List<ImportanceMeasure<BasicEvent>> ret = new ArrayList<>();
+        List<ImportanceMeasureValue<BasicEvent>> ret = new ArrayList<>();
         for(int i = 0; i < bes.size(); i++){
-            ret.add(new ImportanceMeasure<BasicEvent>(bes.get(i), compute(mcs, time, i, bes)));
+            ret.add(new ImportanceMeasureValue<>(bes.get(i), compute(mcs, time, i, bes)));
         }
         return ret;
     }
@@ -64,9 +63,10 @@ public class BirnbaumMeasure {
                     appo.addNode(b);
                 }
             }
-            ap1.add(appo);
+            ap0.add(appo);
         }
-        
+          
+
         
         ret = TopEventProbabilityCalculator.getInstance().computeProb(ap1, time)
                 - TopEventProbabilityCalculator.getInstance().computeProb(ap0, time);

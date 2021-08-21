@@ -1,10 +1,8 @@
 
 package minimalcutset;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -14,7 +12,7 @@ import staticfaulttree.BasicEvent;
  * Class that represent a Minimal Cut Set (MCS).
  * @author Minarelli
  */
-public class MinimalCutSet {
+public final class MinimalCutSet {
     Set<BasicEvent> cs;
 
 
@@ -22,6 +20,11 @@ public class MinimalCutSet {
         cs = new HashSet<>();
     }
 
+    /**
+     * Methods that returns the BasicEvent componing this MinimalCutSet.
+     * Note that the Basic Event are returned in alphabetcally order, based on their description.
+     * @return List of BasicEvemt that compose this MinimalCutSet
+     */
     public List<BasicEvent> getCutSet() {
         return cs.stream().sorted((e1, e2) -> e1.getDescription().compareTo(e2.getDescription())).collect(Collectors.toList());
     }
@@ -67,5 +70,9 @@ public class MinimalCutSet {
         hash = 97 * hash + Objects.hashCode(this.cs);
         return hash;
     }
-       
+
+    @Override
+    public String toString() {
+        return "MinimalCutSet{" + "cs=" + cs + '}';
+    }
 }

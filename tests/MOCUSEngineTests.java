@@ -154,5 +154,4 @@ public class MOCUSEngineTests {
         m.addNode(D9);
         assertEquals(mcs.contains(m), true);
    }
-
 }

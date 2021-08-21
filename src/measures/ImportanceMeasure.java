@@ -1,28 +1,17 @@
-
 package measures;
 
+import java.util.List;
+import minimalcutset.MinimalCutSet;
+import staticfaulttree.BasicEvent;
+
 /**
- * Interface  that define the two methods for importance measures.
+ * Interface that define the two methods for importance measures.
+ *
  * @author Barbuzzi
  */
-public class ImportanceMeasure<T> {
-    
-    private T treeElement;
-    private double value;
+public interface ImportanceMeasure {
 
-    public ImportanceMeasure(T treeElement, double value) {
-        this.treeElement = treeElement;
-        this.value = value;
-    }
-
-    public T getTreeElement() {
-        return treeElement;
-    }
-
-    public double getValue() {
-        return value;
-    }
-    
-    
-    
+     public List<ImportanceMeasureValue<BasicEvent>> compute(List<MinimalCutSet> mcs, double time, List<BasicEvent> bes);
+     
+     public double compute(List<MinimalCutSet> mcs, double time, int index, List<BasicEvent> bes);
 }

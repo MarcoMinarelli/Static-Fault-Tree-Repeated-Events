@@ -16,7 +16,4 @@ public class ConstantDistribution implements CDFInterface{
     public double getProbability(double t) {
         return value;
     }
-    
-    
-    
 }

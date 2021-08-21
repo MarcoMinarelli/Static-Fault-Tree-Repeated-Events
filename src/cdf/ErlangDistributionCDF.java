@@ -16,8 +16,8 @@ public final class ErlangDistributionCDF implements CDFInterface{
         gamma = new GammaDistribution(k, (1/lambda));
     }
 
+    @Override
     public double getProbability(double t) {
         return gamma.cumulativeProbability(t);
     }
-
 }
