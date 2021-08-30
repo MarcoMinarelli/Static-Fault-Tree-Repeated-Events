@@ -27,8 +27,8 @@ public class ReliabilityOptimizer extends Optimizer {
         return opt;
     }
     
-    public List<BasicEvent> optimize(Node topEvent, float testTime, float budget){
-        return optimize(MOCUSEngine.getInstance().getMinimalCutSet(topEvent), testTime, testTime, budget);
+    public List<BasicEvent> optimize(Node topEvent, float testTime, float startTime, float minRel){
+        return optimize(MOCUSEngine.getInstance().getMinimalCutSet(topEvent), testTime, startTime, minRel);
     }
 
     public List<BasicEvent> optimize(List<MinimalCutSet> mcs, float testTime, float startTime, float minRel) {
