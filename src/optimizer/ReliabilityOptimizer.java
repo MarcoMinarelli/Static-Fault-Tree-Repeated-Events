@@ -3,8 +3,10 @@ package optimizer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.DoubleStream;
+import minimalcutset.MOCUSEngine;
 import minimalcutset.MinimalCutSet;
 import staticfaulttree.BasicEvent;
+import staticfaulttree.Node;
 import utils.MCSCombination;
 
 /**
@@ -23,6 +25,10 @@ public class ReliabilityOptimizer extends Optimizer {
 
     public static ReliabilityOptimizer getInstance() {
         return opt;
+    }
+    
+    public List<BasicEvent> optimize(Node topEvent, float testTime, float budget){
+        return optimize(MOCUSEngine.getInstance().getMinimalCutSet(topEvent), testTime, testTime, budget);
     }
 
     public List<BasicEvent> optimize(List<MinimalCutSet> mcs, float testTime, float startTime, float minRel) {

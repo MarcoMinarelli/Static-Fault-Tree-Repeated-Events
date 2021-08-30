@@ -26,7 +26,7 @@ public final class FusselVeselyMeasure implements ImportanceMeasure{
     public List<ImportanceMeasureValue<BasicEvent>> compute(List<MinimalCutSet> mcs, double time, List<BasicEvent> bes) {
         List<ImportanceMeasureValue<BasicEvent>> ret = new ArrayList<>();
 
-        double topEvent = TopEventProbabilityCalculator.getInstance().computeProb(mcs, time);
+        double topEvent = TopEventProbabilityCalculator.getInstance().computeProbability(mcs, time);
 
         for (BasicEvent be : bes) {
             double num = 0;
@@ -41,7 +41,7 @@ public final class FusselVeselyMeasure implements ImportanceMeasure{
     }
 
     public double compute(List<MinimalCutSet> mcs, double time, int index, List<BasicEvent> bes) {
-        double topEvent = TopEventProbabilityCalculator.getInstance().computeProb(mcs, time);
+        double topEvent = TopEventProbabilityCalculator.getInstance().computeProbability(mcs, time);
 
         double prob = 1;
         for (BasicEvent b : mcs.get(index).getCutSet()) {

@@ -3,8 +3,10 @@ package optimizer;
 import com.google.ortools.algorithms.KnapsackSolver;
 import java.util.ArrayList;
 import java.util.List;
+import minimalcutset.MOCUSEngine;
 import minimalcutset.MinimalCutSet;
 import staticfaulttree.BasicEvent;
+import staticfaulttree.Node;
 
 /**
  *
@@ -22,8 +24,12 @@ public class KnapsackFullMaintenanceSolver extends Optimizer {
     public static KnapsackFullMaintenanceSolver getInstance() {
         return kfms;
     }
+    
+    public List<BasicEvent> optimize(Node topEvent, float testTime, float budget){
+        return optimize(MOCUSEngine.getInstance().getMinimalCutSet(topEvent), testTime, budget);
+    }
 
-    public List<BasicEvent> optimize(List<MinimalCutSet> mcs, float testTime, float budget) {
+    public List<BasicEvent> optimize(List<MinimalCutSet> mcs, float testTime, float budget) {        
         List<BasicEvent> ret = new ArrayList<>();
 
         long[] bud = {(long) budget * 100}; //capacity

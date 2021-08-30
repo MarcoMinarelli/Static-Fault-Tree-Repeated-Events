@@ -68,8 +68,8 @@ public final class BirnbaumMeasure implements ImportanceMeasure{
           
 
         
-        ret = TopEventProbabilityCalculator.getInstance().computeProb(ap1, time)
-                - TopEventProbabilityCalculator.getInstance().computeProb(ap0, time);
+        ret = TopEventProbabilityCalculator.getInstance().computeProbability(ap1, time)
+                - TopEventProbabilityCalculator.getInstance().computeProbability(ap0, time);
         return ret;
     }
 }
